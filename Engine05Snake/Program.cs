@@ -28,13 +28,13 @@ namespace ConsoleEngine
         /// </summary>
         static void MainLoop()
         {
-            do
+            while(GameLife)
             {
-                game.Update();
                 game.Draw();
+                game.Update();
 
                 Thread.Sleep(250); // задержка
-            } while (GameLife);
+            }
         }
 
         /// <summary>

@@ -10,6 +10,14 @@ namespace ConsoleEngine
         ConsoleKeyInfo keys;
 
         /// <summary>
+        /// конструктор класса
+        /// </summary>
+        public Game()
+        {
+
+        }
+
+        /// <summary>
         /// метод инициализации игры
         /// </summary>
         public void Run()
