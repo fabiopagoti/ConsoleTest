@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace ConsoleEngine
 {
@@ -16,6 +17,13 @@ namespace ConsoleEngine
         PieceChar[,] Wall;
         PieceChar[] Snake;
 
+        int direcX = 0;
+        int direcY = 0;
+
+        PieceChar[] player;
+
+        #region Базовые методы
+
         /// <summary>
         /// конструктор класса
         /// </summary>
@@ -30,39 +38,28 @@ namespace ConsoleEngine
         /// </summary>
         public void Run()
         {
-            BaseBoard = new PieceChar[Console.WindowWidth, Console.WindowHeight];
-            PreStateBoard = new PieceChar[Console.WindowWidth, Console.WindowHeight];
-            Ground = new PieceChar[Console.WindowWidth, Console.WindowHeight];
-            Wall = new PieceChar[Console.WindowWidth, Console.WindowHeight];
+            BaseBoard = new PieceChar[Console.WindowHeight, Console.WindowWidth];
+            PreStateBoard = new PieceChar[Console.WindowHeight, Console.WindowWidth];
+            Ground = new PieceChar[Console.WindowHeight, Console.WindowWidth];
+            Wall = new PieceChar[Console.WindowHeight, Console.WindowWidth];
             Snake = new PieceChar[10];
 
-            for (int i = 0; i < Console.WindowWidth; i++)
+            //тестовый игрок
+            player = new PieceChar[1];
+            player[0] = new PieceChar(10, 10, ConsoleColor.Yellow, '█');
+
+            for (int i = 0; i < Console.WindowHeight; i++)
             {
-                for (int j = 0; j < Console.WindowHeight; j++)
+                for (int j = 0; j < Console.WindowWidth; j++)
                 {
-                    BaseBoard[i, j] = new PieceChar(j, i, ConsoleColor.White, ' ');
-                    PreStateBoard[i, j] = new PieceChar(j, i, ConsoleColor.White, ' ');
-                    Ground[i, j] = new PieceChar(j, i, ConsoleColor.White, ' ');
-                    Wall[i, j] = new PieceChar(j, i, ConsoleColor.White, ' ');
+                    BaseBoard[i,j] = new PieceChar(i,j, ConsoleColor.White, ' ');
+                    PreStateBoard[i,j] = new PieceChar(i,j, ConsoleColor.White, ' ');
+                    Ground[i,j] = new PieceChar(i,j, ConsoleColor.White, ' ');
+                    Wall[i,j] = new PieceChar(i,j, ConsoleColor.White, ' ');
                 }
             }
 
-            for (int i = 1; i < Console.WindowWidth-1; i++)
-            {
-                Wall[i, 0].Body = '═';
-                Wall[i, Console.WindowHeight - 1].Body = '═';
-            }
-
-            for (int i = 1; i < Console.WindowHeight - 1; i++)
-            {
-                Wall[0, i].Body = '║';
-                Wall[Console.WindowWidth - 1, i].Body = '║';
-            }
-
-            Wall[0,0].Body ='╔';
-            Wall[0, Console.WindowHeight - 1].Body = '╚';
-            Wall[Console.WindowWidth - 1, 0].Body = '╗';
-            Wall[Console.WindowWidth - 1, Console.WindowHeight - 1].Body = '╝';
+            ReadFiles(Wall, "Wall.txt");
 
             Console.Clear();
         }
@@ -75,19 +72,25 @@ namespace ConsoleEngine
             if (Console.KeyAvailable)
             {
                 keys = Console.ReadKey();
+                InputKey();
             }
 
             if (keys.Key == ConsoleKey.Escape) Program.Quit();
 
-            for (int i = 0; i < BaseBoard.GetLength(0); i++)
-            {
-                for (int j = 0; j < BaseBoard.GetLength(1); j++)
-                {
-                    BaseBoard[i, j].Body = Wall[i, j].Body;
-                    BaseBoard[i, j].Color = Wall[i, j].Color;
-                }
-            }
+            /* апдейт игрока */
+            player[0].X += direcX;
+            player[0].Y += direcY;
 
+            if (player[0].Y >= Console.WindowHeight)
+                player[0].Y = Console.WindowHeight - 1;
+            if (player[0].Y <= 1)
+                player[0].Y = 1;
+
+            ClearArray(ref BaseBoard);
+
+            /* копирование всех массивов в базовый по очереди */
+            CopyArray2Base(Wall);
+            CopyArray2Base(player);
         }
 
         /// <summary>
@@ -99,29 +102,127 @@ namespace ConsoleEngine
             {
                 for (int j = 0; j < BaseBoard.GetLength(1); j++)
                 {
-                    if (PreStateBoard[i, j].Body != BaseBoard[i, j].Body | PreStateBoard[i, j].Color != BaseBoard[i, j].Color)
+                    if (PreStateBoard[i,j].Body != BaseBoard[i,j].Body | PreStateBoard[i,j].Color != BaseBoard[i,j].Color)
                     {
-                        Console.SetCursorPosition(i, j);
-                        Console.ForegroundColor = BaseBoard[i, j].Color;
-                        Console.Write(BaseBoard[i, j].Body);
+                        Console.SetCursorPosition(i,j);
+                        Console.ForegroundColor = BaseBoard[i,j].Color;
+                        Console.Write(BaseBoard[i,j].Body);
                     }
-                    
+
                 }
             }
             Console.SetCursorPosition(0, 0);
-            CopyArray();
+            CopyBase2Pre();
         }
+        #endregion
 
-        void CopyArray()
+        #region доп методы
+
+        /// <summary>
+        /// копирование базового массива в массив "предыдущего состояния"
+        /// </summary>
+        void CopyBase2Pre()
         {
             for (int i = 0; i < BaseBoard.GetLength(0); i++)
             {
                 for (int j = 0; j < BaseBoard.GetLength(1); j++)
                 {
-                    PreStateBoard[i, j].Body = BaseBoard[i, j].Body;
-                    PreStateBoard[i, j].Color = BaseBoard[i, j].Color;
+                    PreStateBoard[i,j].Body = BaseBoard[i,j].Body;
+                    PreStateBoard[i,j].Color = BaseBoard[i,j].Color;
                 }
             }
         }
+
+        /// <summary>
+        /// копирование 2D массива в базовый
+        /// </summary>
+        void CopyArray2Base(PieceChar[,] obj)
+        {
+            for (int i = 0; i < obj.GetLength(0); i++)
+            {
+                for (int j = 0; j < obj.GetLength(1); j++)
+                {
+                    BaseBoard[obj[i,j].Y, obj[i,j].X].Body = obj[i,j].Body;
+                    BaseBoard[obj[i,j].Y, obj[i,j].X].Color = obj[i,j].Color;
+                }
+            }
+        }
+
+        /// <summary>
+        /// копирование массива в базовый
+        /// </summary>
+        /// <param name="obj"></param>
+        void CopyArray2Base(PieceChar[] obj)
+        {
+            for (int i = 0; i < obj.Length; i++)
+            {
+                BaseBoard[obj[i].Y, obj[i].X].Body = obj[i].Body;
+                BaseBoard[obj[i].Y, obj[i].X].Color = obj[i].Color;
+            }
+        }
+
+        /// <summary>
+        /// очистка всего массива ' '
+        /// </summary>
+        /// <param name="obj">массив</param>
+        void ClearArray(ref PieceChar[,] obj)
+        {
+            for (int i = 0; i < Console.WindowHeight; i++)
+            {
+                for (int j = 0; j < Console.WindowWidth; j++)
+                {
+                    obj[i,j].Body = ' ';
+                    obj[i,j].Color = ConsoleColor.White;
+                }
+            }
+        }
+
+        /// <summary>
+        /// чтение карты из файла
+        /// </summary>
+        /// <param name="obj">массив</param>
+        /// <param name="name">имя файла</param>
+        void ReadFiles(PieceChar[,] obj, string name)
+        {
+            string[] words = File.ReadAllLines(name);
+
+            for (int i = 0; i < 25; i++)
+            {
+                for (int j = 0; j < 80; j++)
+                {
+                    if (words[i][j] != '.')
+                        obj[i,j].Body = words[i][j];
+                }
+            }
+        }
+
+        void InputKey()
+        {
+            if (keys.Key == ConsoleKey.UpArrow)
+            {
+                direcY = -1;
+                direcX = 0;
+            }
+            if (keys.Key == ConsoleKey.DownArrow)
+            {
+                direcY = 1;
+                direcX = 0;
+            }
+            if (keys.Key == ConsoleKey.LeftArrow)
+            {
+                direcY = 0;
+                direcX = -1;
+            }
+            if (keys.Key == ConsoleKey.RightArrow)
+            {
+                direcY = 0;
+                direcX = 1;
+            }
+        }
+        #endregion
+
+        #region перегрузки
+
+        #endregion
     }
 }
