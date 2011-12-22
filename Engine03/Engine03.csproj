@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BF963342-F856-4FA3-8E66-EBBB5E5FE15C}</ProjectGuid>
+    <ProjectGuid>{D085BF29-B65A-440E-9A62-7D0F7D971730}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Engine01</RootNamespace>
-    <AssemblyName>Engine01</AssemblyName>
+    <RootNamespace>Engine03</RootNamespace>
+    <AssemblyName>Engine03</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -34,7 +34,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Game.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Puzzle.cs" />
+    <Compile Include="WordChecker.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Words.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
