@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{6E57A24E-B560-47A0-AC04-9CF61062876B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine01", "Engine01\Engine01.csproj", "{BF963342-F856-4FA3-8E66-EBBB5E5FE15C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E57A24E-B560-47A0-AC04-9CF61062876B}.Debug|x86.ActiveCfg = Debug|x86
+		{6E57A24E-B560-47A0-AC04-9CF61062876B}.Debug|x86.Build.0 = Debug|x86
+		{6E57A24E-B560-47A0-AC04-9CF61062876B}.Release|x86.ActiveCfg = Release|x86
+		{6E57A24E-B560-47A0-AC04-9CF61062876B}.Release|x86.Build.0 = Release|x86
+		{BF963342-F856-4FA3-8E66-EBBB5E5FE15C}.Debug|x86.ActiveCfg = Debug|x86
+		{BF963342-F856-4FA3-8E66-EBBB5E5FE15C}.Debug|x86.Build.0 = Debug|x86
+		{BF963342-F856-4FA3-8E66-EBBB5E5FE15C}.Release|x86.ActiveCfg = Release|x86
+		{BF963342-F856-4FA3-8E66-EBBB5E5FE15C}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
