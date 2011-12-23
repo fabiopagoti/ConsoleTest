@@ -52,14 +52,14 @@ namespace ConsoleEngine
             {
                 for (int j = 0; j < Console.WindowWidth; j++)
                 {
-                    BaseBoard[i,j] = new PieceChar(i,j, ConsoleColor.White, ' ');
-                    PreStateBoard[i,j] = new PieceChar(i,j, ConsoleColor.White, ' ');
-                    Ground[i,j] = new PieceChar(i,j, ConsoleColor.White, ' ');
-                    Wall[i,j] = new PieceChar(i,j, ConsoleColor.White, ' ');
+                    BaseBoard[i, j] = new PieceChar(i, j, ConsoleColor.White, ' ');
+                    PreStateBoard[i, j] = new PieceChar(i, j, ConsoleColor.White, ' ');
+                    Ground[i, j] = new PieceChar(i, j, ConsoleColor.White, ' ');
+                    Wall[i, j] = new PieceChar(i, j, ConsoleColor.White, ' ');
                 }
             }
 
-            ReadFiles(Wall, "Wall.txt");
+            ReadFiles(ref Wall, "Wall.txt");
 
             Console.Clear();
         }
@@ -102,11 +102,12 @@ namespace ConsoleEngine
             {
                 for (int j = 0; j < BaseBoard.GetLength(1); j++)
                 {
-                    if (PreStateBoard[i,j].Body != BaseBoard[i,j].Body | PreStateBoard[i,j].Color != BaseBoard[i,j].Color)
+                    if (PreStateBoard[i, j].Body != BaseBoard[i, j].Body | PreStateBoard[i, j].Color != BaseBoard[i, j].Color)
                     {
-                        Console.SetCursorPosition(i,j);
-                        Console.ForegroundColor = BaseBoard[i,j].Color;
-                        Console.Write(BaseBoard[i,j].Body);
+                        Console.CursorLeft = j;
+                        Console.CursorTop = i;
+                        Console.ForegroundColor = BaseBoard[i, j].Color;
+                        Console.Write(BaseBoard[i, j].Body);
                     }
 
                 }
@@ -127,8 +128,8 @@ namespace ConsoleEngine
             {
                 for (int j = 0; j < BaseBoard.GetLength(1); j++)
                 {
-                    PreStateBoard[i,j].Body = BaseBoard[i,j].Body;
-                    PreStateBoard[i,j].Color = BaseBoard[i,j].Color;
+                    PreStateBoard[i, j].Body = BaseBoard[i, j].Body;
+                    PreStateBoard[i, j].Color = BaseBoard[i, j].Color;
                 }
             }
         }
@@ -142,8 +143,8 @@ namespace ConsoleEngine
             {
                 for (int j = 0; j < obj.GetLength(1); j++)
                 {
-                    BaseBoard[obj[i,j].Y, obj[i,j].X].Body = obj[i,j].Body;
-                    BaseBoard[obj[i,j].Y, obj[i,j].X].Color = obj[i,j].Color;
+                    BaseBoard[obj[i, j].Y, obj[i, j].X].Body = obj[i, j].Body;
+                    BaseBoard[obj[i, j].Y, obj[i, j].X].Color = obj[i, j].Color;
                 }
             }
         }
@@ -171,8 +172,8 @@ namespace ConsoleEngine
             {
                 for (int j = 0; j < Console.WindowWidth; j++)
                 {
-                    obj[i,j].Body = ' ';
-                    obj[i,j].Color = ConsoleColor.White;
+                    obj[i, j].Body = ' ';
+                    obj[i, j].Color = ConsoleColor.White;
                 }
             }
         }
@@ -182,16 +183,16 @@ namespace ConsoleEngine
         /// </summary>
         /// <param name="obj">массив</param>
         /// <param name="name">имя файла</param>
-        void ReadFiles(PieceChar[,] obj, string name)
+        void ReadFiles(ref PieceChar[,] obj, string name)
         {
             string[] words = File.ReadAllLines(name);
 
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < obj.GetLength(0); i++)
             {
-                for (int j = 0; j < 80; j++)
+                for (int j = 0; j < obj.GetLength(1); j++)
                 {
                     if (words[i][j] != '.')
-                        obj[i,j].Body = words[i][j];
+                        obj[i, j].Body = words[i][j];
                 }
             }
         }

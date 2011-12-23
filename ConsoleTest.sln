@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine04", "Engine04\Engine
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine05Snake", "Engine05Snake\Engine05Snake.csproj", "{3CBA1751-98EF-4A91-B5E7-9488E2090F6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine06", "Engine06\Engine06.csproj", "{99EE398D-1806-4596-A97F-CDF10C299DAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine07", "Engine07\Engine07.csproj", "{A5CF7DE6-09D0-4E69-AB59-79D151EB3369}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -37,6 +41,14 @@ Global
 		{3CBA1751-98EF-4A91-B5E7-9488E2090F6D}.Debug|x86.Build.0 = Debug|x86
 		{3CBA1751-98EF-4A91-B5E7-9488E2090F6D}.Release|x86.ActiveCfg = Release|x86
 		{3CBA1751-98EF-4A91-B5E7-9488E2090F6D}.Release|x86.Build.0 = Release|x86
+		{99EE398D-1806-4596-A97F-CDF10C299DAB}.Debug|x86.ActiveCfg = Debug|x86
+		{99EE398D-1806-4596-A97F-CDF10C299DAB}.Debug|x86.Build.0 = Debug|x86
+		{99EE398D-1806-4596-A97F-CDF10C299DAB}.Release|x86.ActiveCfg = Release|x86
+		{99EE398D-1806-4596-A97F-CDF10C299DAB}.Release|x86.Build.0 = Release|x86
+		{A5CF7DE6-09D0-4E69-AB59-79D151EB3369}.Debug|x86.ActiveCfg = Debug|x86
+		{A5CF7DE6-09D0-4E69-AB59-79D151EB3369}.Debug|x86.Build.0 = Debug|x86
+		{A5CF7DE6-09D0-4E69-AB59-79D151EB3369}.Release|x86.ActiveCfg = Release|x86
+		{A5CF7DE6-09D0-4E69-AB59-79D151EB3369}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
