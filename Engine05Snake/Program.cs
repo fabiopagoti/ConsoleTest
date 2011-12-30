@@ -33,7 +33,7 @@ namespace ConsoleEngine
                 game.Draw();
                 game.Update();
 
-                Thread.Sleep(250); // задержка
+                Thread.Sleep(150); // задержка
             }
         }
 
