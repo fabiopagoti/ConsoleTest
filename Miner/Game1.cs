@@ -25,6 +25,7 @@ namespace Miner
             PrintArray();
             Console.ReadLine();
             CountMine(2, 2);
+            FillCell();
             PrintArray();
         }
 
@@ -43,7 +44,7 @@ namespace Miner
                 }
             }
 
-            char a = Convert.ToChar( count.ToString());
+            char a = Convert.ToChar(count.ToString());
 
             massiv[X, Y] = a;
         }
@@ -60,5 +61,18 @@ namespace Miner
             }
         }
 
+        // открытие пустых клеток
+        //
+
+        private void FillCell()
+        {
+            for (int y = 0; y < massiv.GetLength(0); y++)
+            {
+                for (int x = 0; x < massiv.GetLength(1); x = x + 2 )
+                {
+                    massiv[x, y] = '1';
+                }
+            }
+        }
     }
 }
